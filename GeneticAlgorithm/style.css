@@ -1,0 +1,105 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: monospace;
+}
+#win {
+  cursor: pointer;
+  font-family:monospace;
+  font-size: 20px;
+  background-color: rgb(255, 201, 182);
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-top: 24px;
+  margin-left: 460px;
+  padding: 10px;
+  box-shadow: 
+    1px 3px .01px 1px  rgb(0, 44, 94),
+    -1px 1px .01px 1px rgb(0, 44, 94);
+  position: absolute;
+  display: block;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+#slider {
+  cursor: pointer;
+  font-family:monospace;
+  font-size: 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-top: 82px;
+  margin-left: 419px;
+  padding: 10px;
+  box-shadow: 
+    1px 3px .01px 1px  rgb(0, 44, 94),
+    -1px 1px .01px 1px rgb(0, 44, 94);
+  position: absolute;
+  display: block;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+#win:hover{
+  transform: scale(1.05);
+  -webkit-transform: scale(1.05);
+  -moz-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  -o-transform: scale(1.05);
+}
+#win:active {
+  transform: scale(.9);
+  -webkit-transform: scale(.9);
+  -moz-transform: scale(.9);
+  -ms-transform: scale(.9);
+  -o-transform: scale(.9);
+}
+canvas {
+  display: block;
+}
+input[type="range"] {
+  appearance: none;
+  -webkit-appearance: none; /* Remove default styling (for Chrome/Safari) */
+  width: 129px;
+  height: 6px;
+  background: rgb(255, 201, 182); /* fallback */
+  border-radius: 5px;
+  outline: none;
+}
+
+/* Track (Chrome/Safari) */
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  background: rgb(0, 0, 0); /* Track color */
+  border-radius: 5px;
+}
+
+/* Thumb (Chrome/Safari) */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  background: rgb(0, 0, 0); /* Thumb color */
+  border-radius: 50%;
+  margin-top: -7px; /* Align thumb with track */
+  cursor: pointer;
+}
+
+/* Track (Firefox) */
+input[type="range"]::-moz-range-track {
+  height: 6px;
+  background: rgb(0, 0, 0);
+  border-radius: 5px;
+}
+
+/* Thumb (Firefox) */
+input[type="range"]::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  background: rgb(0, 0, 0);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
