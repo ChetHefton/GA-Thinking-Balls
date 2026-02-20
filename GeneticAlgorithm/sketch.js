@@ -23,10 +23,10 @@ let slider;
 const config = { //used to config brain
   inputSize: 17,
   outputSize: 4,
-  learningRate: 0.3, //default of brainjs, speed it learns
+  learningRate: 0.15, //default of brainjs, speed it learns
   decayRate: 0.999, //decreases learning rate (get more specific)
-  hiddenLayers: [16], //array of ints for the sizes of the hidden layers in the network
-  activation: 'sigmoid', //supported activation types: ['sigmoid', 'relu', 'leaky-relu', 'tanh'],
+  hiddenLayers: [24], //array of ints for the sizes of the hidden layers in the network
+  activation: 'tanh', //supported activation types: ['sigmoid', 'relu', 'leaky-relu', 'tanh'],
 };
 
 /* ── arena dimensions ── */
@@ -56,9 +56,9 @@ class Ball {
     this.turnSpeed = .65; //radians per frame
     this.age = 0;
     this.distanceTraveled = 0;
-    this.decisionInterval = 150; //millis between decisions
+    this.decisionInterval = 50; //millis between decisions
     this.decisionTimer = 0;
-    this.output = [0.5, 0.5, 0.5, 0.5]; //neutral default
+    this.output = [0, 0, 0, 0]; //neutral default
     this.decisionCooldown = 150 * (60 / frameR8); //higher frame = less frequent decisions
 
     //const top    = arena.cy - arena.h / 2 + this.r / 2;
@@ -73,7 +73,7 @@ class Ball {
     return this.distanceTraveled;
   }
   castVision() {
-  const maxDist = 100;
+  const maxDist = 250;
   const angles = [-1250, -2500,0,10300, 1250, 2500]; //angles in degrees from facing forward (right)
 
   let distances = [];
@@ -200,13 +200,13 @@ if (hit) {
 
   //Always apply current output, but only update it every few frames
   if (this.output) {
-    if (this.output[0] > 0.5) this.angle += this.turnSpeed;
-    else if (this.output[1] > 0.5) this.angle -= this.turnSpeed;
+    if (this.output[0] > 0) this.angle += this.turnSpeed;
+    else if (this.output[0] < 0) this.angle -= this.turnSpeed;
 
-    if (this.output[2] > 0.5) {
+    if (this.output[2] > 0) {
       this.velX += this.accel * cos(this.angle) * ((frameR8+180) / 240);
       this.velY += this.accel * sin(this.angle) * ((frameR8+180) / 180);
-    } else if (this.output[3] > 0.5) {
+    } else if (this.output[2] < 0) {
       this.velX -= this.accel * cos(this.angle) * ((frameR8+180) / 240);
       this.velY -= this.accel * sin(this.angle) * ((frameR8+180) / 240);
     }
@@ -217,13 +217,13 @@ if (hit) {
 }
 
 applyDamping() { //friction
-  let dampFactor =  0.8 * ((frameR8+180) / 240);
+  let dampFactor =  0.82 * ((frameR8+180) / 240);
   this.velX *= dampFactor;
   this.velY *= dampFactor;
 
   //if very slow stop
-  if (abs(this.velX) < 0.05) this.velX = 0;
-  if (abs(this.velY) < 0.05) this.velY = 0;
+  if (abs(this.velX) < 0.1) this.velX = 0;
+  if (abs(this.velY) < 0.1) this.velY = 0;
 }
 constrainToArena() {
   //math of big rect edges
@@ -269,11 +269,11 @@ cloneAndMutate() {
   return clone;
 }
 mutate(brainJSON) {
-  const mutationRate = 0.35; //likelihood of mutation
+  const mutationRate = 0.4; //likelihood of mutation
 
   const mutateWeight = (val) => {
     if (Math.random() < mutationRate) {
-      return val + random(-1, 1);
+      return val + random(-.25, .25);
     }
     return val;
   };
@@ -448,7 +448,7 @@ evaluateFitness() {
     ball.fitness += survivalTime*2.5;   //survive longer = better
 
     ball.fitness += avgVision * 2;      //encourage scanning
-    ball.fitness += progress*7.5;       //encourage forward progress
+    ball.fitness += progress*6;       //encourage forward progress
     ball.fitness += visionVariance*3; //higher variance = better
 
     //Success bonus
