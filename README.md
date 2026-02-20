@@ -1,6 +1,8 @@
 # GA Thinking Balls (Neuroevolution Prototype)
 
 ![Image](https://github.com/user-attachments/assets/09351e92-fcd5-40f9-83bb-42dd4e0e49b9)
+---
+![Image](https://github.com/user-attachments/assets/6ab5fd74-e54e-458d-8df7-0267832c3450)
 
 A browser-based simulation where a population of balls learns to navigate an obstacle arena over generations.  
 Each ball uses a small neural network and evolves via mutation + selection (genetic algorithm style).
